@@ -9,6 +9,10 @@ router.post(
   controller.handleCreateMovie
 );
 router.put("/:id");
-router.delete("/:id");
+router.delete(
+  "/:id",
+  ensureAuthenticated({ allowedRoles: ["admin"] }),
+  controller.handledeleteMovieById
+);
 
 module.exports = router;

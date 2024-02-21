@@ -23,4 +23,26 @@ const handlegetMovies = async (req, res) => {
   const movies = await Movie.find({}).skip(skip).limit(LIMIT);
   return res.json({ status: "success", data: movies, page: page });
 };
-module.exports = { handleCreateMovie, handlegetMovies };
+const handledeleteMovieById = async (req, res) => {
+  if (req?.params?.id) {
+    const id = req.params.id;
+    try {
+      const deleteMovie = await Movie.findByIdAndDelete(id);
+      if (deleteMovie) {
+        return res.json({
+          status: "success",
+          message: "Movie Deleted Successfully",
+          deleteMovie,
+        });
+      } else {
+        return res
+          .status(500)
+          .json({ status: "error", error: `Movie with ${id} not exists` });
+      }
+    } catch (error) {
+      return res.status(500).json({ status: "error", error: error });
+    }
+  }
+  return res.status(500).json({ status: "error", error: "InValid Request" });
+};
+module.exports = { handleCreateMovie, handlegetMovies, handledeleteMovieById };
