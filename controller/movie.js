@@ -45,4 +45,25 @@ const handledeleteMovieById = async (req, res) => {
   }
   return res.status(500).json({ status: "error", error: "InValid Request" });
 };
-module.exports = { handleCreateMovie, handlegetMovies, handledeleteMovieById };
+
+const handleFindMovieById = async (req, res) => {
+  if (req?.params?.id) {
+    const id = req?.params?.id;
+
+    const movieDetail = await Movie.findById(id);
+    if (movieDetail) {
+      res.json({ status: "success", data: movieDetail });
+    } else {
+      res
+        .status(400)
+        .json({ status: "error", error: `Movie with ${id} not exists` });
+    }
+  }
+  return res.status(500).json({ status: "error", error: "InValid Request" });
+};
+module.exports = {
+  handleCreateMovie,
+  handlegetMovies,
+  handledeleteMovieById,
+  handleFindMovieById,
+};

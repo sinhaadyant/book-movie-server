@@ -5,6 +5,7 @@ const PORT = process.env.PORT;
 const mongoose = require("mongoose");
 const authRouter = require("./routes/auth");
 const movieRouter = require("./routes/movie");
+const theaterRouter = require("./routes/theater");
 const cors = require("cors");
 const { authenticationMiddlware } = require("./middlewares/auth");
 
@@ -27,7 +28,7 @@ app.get("/", (req, res) => res.json({ status: "Success" }));
 
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/movies`, movieRouter);
-
+app.use(`/api/v1/theaters`, theaterRouter);
 app.listen(PORT, () => {
   console.log(`Server started at ${PORT}`);
 });
